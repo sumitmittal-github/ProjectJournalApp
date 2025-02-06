@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.sumit</groupId>
-	<artifactId>Microservices</artifactId>
+	<artifactId>ProjectJournalApp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Microservices</name>
-	<description>Project with Spring Boot Microservices</description>
+	<name>ProjectJournalApp</name>
+	<description>End to End Project with Spring Boot + Microservices + Authentication + DB</description>
 	<url/>
 	<licenses>
 		<license/>
