@@ -17,7 +17,7 @@ public class JournalEntry {
     private ObjectId id;
     private String title;
     private String content;
-    private LocalDateTime createdOn = LocalDateTime.now();
-    private LocalDateTime updatedOn = LocalDateTime.now();
+    private LocalDateTime createdOn;
+    private LocalDateTime updatedOn;
 
 }

@@ -24,14 +24,14 @@ public class JournalEntryService {
     }
 
     public JournalEntry create(JournalEntry journalEntry) {
-        journalEntryRepository.save(journalEntry);
-        return journalEntry;
+        journalEntry.setCreatedOn(LocalDateTime.now());
+        return journalEntryRepository.save(journalEntry);
     }
 
     public JournalEntry update(ObjectId entryId, JournalEntry uiEntry) {
         JournalEntry dbEntry = findById(entryId);
         if(dbEntry == null)
-            return uiEntry;
+            return null;
 
         dbEntry.setTitle(uiEntry.getTitle());
         dbEntry.setContent(uiEntry.getContent());
