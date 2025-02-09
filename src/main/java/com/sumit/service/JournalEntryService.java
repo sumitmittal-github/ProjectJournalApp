@@ -40,7 +40,7 @@ public class JournalEntryService {
         // saving journal entry
         journalEntry.setCreatedOn(LocalDateTime.now());
         JournalEntry dbJournalEntry = journalEntryRepository.save(journalEntry);
-        
+
         // saving user
         user.getJournalEntries().add(dbJournalEntry);
         userService.save(user);
