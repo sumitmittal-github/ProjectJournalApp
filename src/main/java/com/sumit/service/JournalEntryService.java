@@ -6,6 +6,7 @@ import com.sumit.repository.JournalEntryRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -30,7 +31,8 @@ public class JournalEntryService {
         return journalEntryRepository.findById(entryId).orElse(null);
     }
 
-    public JournalEntry createByUser(String username, JournalEntry journalEntry) {
+    @Transactional
+    public JournalEntry createByUser(String username, JournalEntry journalEntry){
         User user = userService.findByUsername(username);
         if(user == null)
             return null;
@@ -38,7 +40,7 @@ public class JournalEntryService {
         // saving journal entry
         journalEntry.setCreatedOn(LocalDateTime.now());
         JournalEntry dbJournalEntry = journalEntryRepository.save(journalEntry);
-
+        
         // saving user
         user.getJournalEntries().add(dbJournalEntry);
         userService.save(user);
@@ -67,6 +69,7 @@ public class JournalEntryService {
         return dbEntry;
     }
 
+    @Transactional
     public boolean deleteByUser(String username, ObjectId entryId){
         User user = userService.findByUsername(username);
         if(user == null)
