@@ -1,6 +1,7 @@
 package com.sumit.service;
 
 import com.sumit.entity.JournalEntry;
+import com.sumit.entity.User;
 import com.sumit.repository.JournalEntryRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,17 +16,34 @@ public class JournalEntryService {
     @Autowired
     private JournalEntryRepository journalEntryRepository;
 
-    public List<JournalEntry> findAll() {
-        return journalEntryRepository.findAll();
+    @Autowired
+    private UserService userService;
+
+    public List<JournalEntry> findAllByUser(String username) {
+        User user = userService.findByUsername(username);
+        if(user == null)
+            return null;
+        return user.getJournalEntries();
     }
 
     public JournalEntry findById(ObjectId entryId) {
         return journalEntryRepository.findById(entryId).orElse(null);
     }
 
-    public JournalEntry create(JournalEntry journalEntry) {
+    public JournalEntry createByUser(String username, JournalEntry journalEntry) {
+        User user = userService.findByUsername(username);
+        if(user == null)
+            return null;
+
+        // saving journal entry
         journalEntry.setCreatedOn(LocalDateTime.now());
-        return journalEntryRepository.save(journalEntry);
+        JournalEntry dbJournalEntry = journalEntryRepository.save(journalEntry);
+
+        // saving user
+        user.getJournalEntries().add(dbJournalEntry);
+        userService.save(user);
+
+        return dbJournalEntry;
     }
 
     public JournalEntry update(ObjectId entryId, JournalEntry uiEntry) {
@@ -40,7 +58,16 @@ public class JournalEntryService {
         return dbEntry;
     }
 
-    public boolean delete(ObjectId entryId){
+    public boolean deleteByUser(String username, ObjectId entryId){
+        User user = userService.findByUsername(username);
+        if(user == null)
+            return false;
+
+        // remove JE reference from user
+        user.getJournalEntries().removeIf(je -> je.getId().equals(entryId));
+        userService.save(user);
+
+        // remove Journal entry
         journalEntryRepository.deleteById(entryId);
         return true;
     }
