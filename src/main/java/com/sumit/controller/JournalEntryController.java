@@ -43,9 +43,9 @@ public class JournalEntryController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @PutMapping("/id/{entryId}")
-    public ResponseEntity<JournalEntry> update(@PathVariable ObjectId entryId, @RequestBody JournalEntry entry) {
-        JournalEntry dbEntry = journalEntryService.update(entryId, entry);
+    @PutMapping("/{username}/{entryId}")
+    public ResponseEntity<JournalEntry> updateByUser(@PathVariable String username, @PathVariable ObjectId entryId, @RequestBody JournalEntry entry) {
+        JournalEntry dbEntry = journalEntryService.updateByUser(username, entryId, entry);
         if(dbEntry != null)
             return new ResponseEntity<>(dbEntry, HttpStatus.OK);
         else

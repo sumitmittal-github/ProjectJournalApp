@@ -46,9 +46,18 @@ public class JournalEntryService {
         return dbJournalEntry;
     }
 
-    public JournalEntry update(ObjectId entryId, JournalEntry uiEntry) {
+    public JournalEntry updateByUser(String username, ObjectId entryId, JournalEntry uiEntry) {
+        User user = userService.findByUsername(username);
+        if(user == null)
+            return null;
+
         JournalEntry dbEntry = findById(entryId);
         if(dbEntry == null)
+            return null;
+
+        // check if this dbEntry belongs to this passed user
+        boolean isBelongsToUser = user.getJournalEntries().stream().anyMatch(je -> je.getId().equals(entryId));
+        if(!isBelongsToUser)
             return null;
 
         dbEntry.setTitle(uiEntry.getTitle());
@@ -61,6 +70,11 @@ public class JournalEntryService {
     public boolean deleteByUser(String username, ObjectId entryId){
         User user = userService.findByUsername(username);
         if(user == null)
+            return false;
+
+        // check if this dbEntry belongs to this passed user
+        boolean isBelongsToUser = user.getJournalEntries().stream().anyMatch(je -> je.getId().equals(entryId));
+        if(!isBelongsToUser)
             return false;
 
         // remove JE reference from user
