@@ -27,8 +27,12 @@ public class JournalEntryService {
         return user.getJournalEntries();
     }
 
-    public JournalEntry findById(ObjectId entryId) {
-        return journalEntryRepository.findById(entryId).orElse(null);
+    public JournalEntry findById(String username, ObjectId entryId) {
+        User user = userService.findByUsername(username);
+        List<JournalEntry> journalEntries = user.getJournalEntries().stream().filter(je -> je.getId().equals(entryId)).toList();
+        if(journalEntries.isEmpty())
+            return null;
+        return journalEntries.getFirst();
     }
 
     @Transactional
@@ -53,13 +57,13 @@ public class JournalEntryService {
         if(user == null)
             return null;
 
-        JournalEntry dbEntry = findById(entryId);
-        if(dbEntry == null)
-            return null;
-
         // check if this dbEntry belongs to this passed user
         boolean isBelongsToUser = user.getJournalEntries().stream().anyMatch(je -> je.getId().equals(entryId));
         if(!isBelongsToUser)
+            return null;
+
+        JournalEntry dbEntry = findById(username, entryId);
+        if(dbEntry == null)
             return null;
 
         dbEntry.setTitle(uiEntry.getTitle());

@@ -14,17 +14,26 @@ public class PublicController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/health-check")
+    public ResponseEntity<String> healthCheck() {
+        return new ResponseEntity<>("ok", HttpStatus.OK);
+    }
+
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody User user) {
         try{
-            User dbUser = userService.registerUser(user);
+            User dbUser = userService.register(user);
             return new ResponseEntity<>(dbUser, HttpStatus.CREATED);
         } catch(Exception e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PostMapping("/login")
+
+
+
+
+    /*@PostMapping("/login")
     public ResponseEntity<User> login(@RequestBody User user) {
         try{
             User dbUser = userService.loginUser(user);
@@ -32,12 +41,6 @@ public class PublicController {
         } catch(Exception e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-    }
-
-    @GetMapping("/health-check")
-    public ResponseEntity<String> healthCheck() {
-        return new ResponseEntity<>("ok", HttpStatus.OK);
-    }
-
+    }*/
 
 }

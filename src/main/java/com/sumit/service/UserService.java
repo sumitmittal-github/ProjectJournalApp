@@ -2,13 +2,11 @@ package com.sumit.service;
 
 import com.sumit.entity.User;
 import com.sumit.repository.UserRepository;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Repository
 public class UserService {
@@ -16,15 +14,39 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(12);
+    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(12);
 
-    public User registerUser(User user) {
+    public User register(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.getRoles().add("USER");
         user.setCreatedOn(LocalDateTime.now());
         return userRepository.save(user);
     }
 
+    public User update(String username, User uiUser) {
+        User dbUser = userRepository.findByUsername(username);                      //dbUser can not be null, because this was secure end point and only authenticated user can access this end point
+        dbUser.setUsername(uiUser.getUsername());
+        dbUser.setPassword(bCryptPasswordEncoder.encode(uiUser.getPassword()));     // because from front end we will always get the plain password
+        dbUser.setUpdatedOn(LocalDateTime.now());
+        userRepository.save(dbUser);
+        return dbUser;
+    }
+
+    public boolean delete(String username){
+        userRepository.deleteByUsername(username);
+        return true;
+    }
+
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    public void save(User user) {
+        userRepository.save(user);
+    }
+
+
+    /*
     public User registerAdmin(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.getRoles().add("ADMIN");
@@ -48,29 +70,17 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
-    public User findByUsername(String userName) {
-        return userRepository.findByUsername(userName);
-    }
 
 
 
-    public void save(User user) {
-        userRepository.save(user);
-    }
+    */
 
-    public User update(String username, User uiUser) {
-        User dbUser = findByUsername(username);         //dbUser can not be null, because this was secure end point and only authenticated user can access this end point
-        dbUser.setUsername(uiUser.getUsername());
-        dbUser.setPassword(bCryptPasswordEncoder.encode(uiUser.getPassword()));
-        dbUser.setUpdatedOn(LocalDateTime.now());
-        userRepository.save(dbUser);
-        return dbUser;
-    }
 
-    public boolean delete(String username){
-        userRepository.deleteByUsername(username);
-        return true;
-    }
+
+
+
+
+
 
 
 }
