@@ -48,14 +48,7 @@ public class UserController {
 
     /*
     ONLY FOR ADMIN
-    @GetMapping
-    public ResponseEntity<List<User>> findAll() {
-        List<User> list = userService.findAll();
-        if(list != null && !list.isEmpty())
-            return new ResponseEntity<>(list, HttpStatus.OK);
-        else
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
+
 
     @GetMapping("/id/{userId}")
     public ResponseEntity<User> findById(@PathVariable ObjectId userId) {

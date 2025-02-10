@@ -7,6 +7,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 @Repository
 public class UserService {
@@ -18,7 +20,14 @@ public class UserService {
 
     public User register(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.getRoles().add("USER");
+        user.setRoles(List.of("USER"));
+        user.setCreatedOn(LocalDateTime.now());
+        return userRepository.save(user);
+    }
+
+    public User createAdmin(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setRoles(List.of("ADMIN", "USER"));
         user.setCreatedOn(LocalDateTime.now());
         return userRepository.save(user);
     }
@@ -45,6 +54,9 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
 
     /*
     public User registerAdmin(User user) {
@@ -62,9 +74,7 @@ public class UserService {
         return dbUser;
     }
 
-    public List<User> findAll() {
-        return userRepository.findAll();
-    }
+
 
     public User findById(ObjectId id) {
         return userRepository.findById(id).orElse(null);
