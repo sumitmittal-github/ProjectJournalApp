@@ -4,6 +4,7 @@ import com.sumit.entity.User;
 import com.sumit.repository.UserRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -14,6 +15,30 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(12);
+
+    public User registerUser(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.getRoles().add("USER");
+        user.setCreatedOn(LocalDateTime.now());
+        return userRepository.save(user);
+    }
+
+    public User registerAdmin(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.getRoles().add("ADMIN");
+        user.setCreatedOn(LocalDateTime.now());
+        return userRepository.save(user);
+    }
+
+    public User loginUser(User user) {
+        User dbUser = userRepository.findByUsernameAndPassword(user.getUsername(), bCryptPasswordEncoder.encode(user.getPassword()));
+        if(dbUser == null)
+            return null;
+
+        return dbUser;
+    }
 
     public List<User> findAll() {
         return userRepository.findAll();
@@ -27,25 +52,25 @@ public class UserService {
         return userRepository.findByUsername(userName);
     }
 
-    public User save(User user) {
-        user.setCreatedOn(LocalDateTime.now());
-        return userRepository.save(user);
+
+
+    public void save(User user) {
+        userRepository.save(user);
     }
 
     public User update(String username, User uiUser) {
-        User dbUser = findByUsername(username);
-        if(dbUser == null)
-            return null;
+        User dbUser = findByUsername(username);         //dbUser can not be null, because this was secure end point and only authenticated user can access this end point
         dbUser.setUsername(uiUser.getUsername());
-        dbUser.setPassword(uiUser.getPassword());
+        dbUser.setPassword(bCryptPasswordEncoder.encode(uiUser.getPassword()));
         dbUser.setUpdatedOn(LocalDateTime.now());
         userRepository.save(dbUser);
         return dbUser;
     }
 
-    public boolean delete(ObjectId userId){
-        userRepository.deleteById(userId);
+    public boolean delete(String username){
+        userRepository.deleteByUsername(username);
         return true;
     }
+
 
 }
