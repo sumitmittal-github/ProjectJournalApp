@@ -36,4 +36,11 @@ public class User {
 
     private LocalDateTime updatedOn;
 
+    public User(@NonNull String username, @NonNull String password, @NonNull List<String> roles) {
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
+    }
+
+
 }
