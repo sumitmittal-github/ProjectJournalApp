@@ -2,41 +2,35 @@ package com.sumit.security;
 
 import com.sumit.entity.User;
 import com.sumit.repository.UserRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.stream.Collectors;
-
 @Service
+@Log4j2
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
 
-    /*@Autowired
-    private PasswordEncoder encoder;*/
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        log.info(STR."\{username} user tried to login ...");
         User user = userRepository.findByUsername(username);
-        if(user == null)
+        if(user == null){
+            log.info(STR."\{username} does not exists in DB");
             throw new UsernameNotFoundException("User not found !!");
+        }
 
-
-        //return new CustomUserDetails(user);
-
-        UserDetails userDetails = org.springframework.security.core.userdetails.User.builder()
+        log.info(STR."\{username} found in DB, returning Spring UserDetails object to AuthenticationProvider");
+        return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getUsername())
                 .password(user.getPassword())
                 .roles(user.getRoles().toArray(new String[0]))
                 .build();
-        return userDetails;
-
     }
 
 

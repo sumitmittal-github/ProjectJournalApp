@@ -1,8 +1,6 @@
 package com.sumit.security;
 
-import com.sumit.service.UserService;
 import com.sumit.utils.Roles;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -19,7 +17,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-public class SecurityConfig {
+public class SpringSecurity {
 
     // =========================== Authentication ===========================
     @Bean
