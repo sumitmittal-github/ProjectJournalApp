@@ -5,12 +5,12 @@ import com.sumit.repository.UserRepository;
 import com.sumit.utils.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Repository
+@Service
 public class UserService {
 
     @Autowired

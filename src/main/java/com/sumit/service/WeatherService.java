@@ -1,7 +1,8 @@
 package com.sumit.service;
 
+import com.sumit.cache.MyCache;
 import com.sumit.entity.Weather;
-import com.sumit.utils.Constants;
+import com.sumit.utils.PlaceHolders;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,12 +18,16 @@ public class WeatherService {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private MyCache myCache;
+
     @Value("${weatherstack.api.token}")
     String weatherApiToken;
 
     public ResponseEntity<Weather> getCurrentWeather(String cityName){
         try{
-            String currentWeatherApi = String.format(Constants.CURRENT_WEATHER_API, weatherApiToken, cityName);
+            String weatherAPIUrl = myCache.cacheMap.get(PlaceHolders.CACHE_GET_WEATHER_API_KEY);
+            String currentWeatherApi = String.format(weatherAPIUrl, weatherApiToken, cityName);
             log.info("API CALL : {}", currentWeatherApi);
             ResponseEntity<Weather> weather = restTemplate.exchange(currentWeatherApi, HttpMethod.GET, null, Weather.class);
             log.info(weather.toString());
