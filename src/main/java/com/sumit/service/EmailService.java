@@ -15,12 +15,14 @@ public class EmailService {
 
     public void sendMail(String to, String subject, String body){
         try{
+            log.info(STR."Sending Email, to=\{to}, subject=\{subject}, to=\{body} ...");
             SimpleMailMessage mail = new SimpleMailMessage();
             mail.setTo(to);
             mail.setSubject(subject);
             mail.setText(body);
 
             javaMailSender.send(mail);
+            log.info("Mail sent !!!");
         } catch(Exception e){
             log.error("Exception occurred in sendMail : ", e);
         }
