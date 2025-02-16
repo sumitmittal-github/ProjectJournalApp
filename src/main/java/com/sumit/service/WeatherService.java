@@ -17,7 +17,7 @@ public class WeatherService {
     @Autowired
     private RestTemplate restTemplate;
 
-    @Value("${weather.stack.api.token}")
+    @Value("${weatherstack.api.token}")
     String weatherApiToken;
 
     public ResponseEntity<Weather> getCurrentWeather(String cityName){
@@ -28,8 +28,8 @@ public class WeatherService {
             log.info(weather.toString());
             return weather;
         } catch (Exception e){
-            log.error("Exception in getCurrentWeather for city name = {}", cityName, e);
-            throw new RuntimeException("Exception in getCurrentWeather " + e.getMessage());
+            log.error(STR."Exception in getCurrentWeather for city name = \{cityName}", e);
+            throw new RuntimeException(STR."Exception in getCurrentWeather \{e.getMessage()}");
         }
     }
 

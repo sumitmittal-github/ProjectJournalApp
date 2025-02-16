@@ -2,12 +2,12 @@ package com.sumit.service;
 
 import com.sumit.entity.User;
 import com.sumit.repository.UserRepository;
+import com.sumit.utils.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 
 @Repository
@@ -20,14 +20,14 @@ public class UserService {
 
     public User register(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setRoles(List.of("USER"));
+        user.setRoles(List.of(Roles.USER.toString()));
         user.setCreatedOn(LocalDateTime.now());
         return userRepository.save(user);
     }
 
     public User createAdmin(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setRoles(List.of("ADMIN", "USER"));
+        user.setRoles(List.of(Roles.ADMIN.toString(), Roles.USER.toString()));
         user.setCreatedOn(LocalDateTime.now());
         return userRepository.save(user);
     }
@@ -61,7 +61,7 @@ public class UserService {
     /*
     public User registerAdmin(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.getRoles().add("ADMIN");
+        user.getRoles().add(Roles.ADMIN.toString());
         user.setCreatedOn(LocalDateTime.now());
         return userRepository.save(user);
     }

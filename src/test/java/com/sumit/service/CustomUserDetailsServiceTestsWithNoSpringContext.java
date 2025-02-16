@@ -3,6 +3,7 @@ package com.sumit.service;
 import com.sumit.entity.User;
 import com.sumit.repository.UserRepository;
 import com.sumit.security.CustomUserDetailsService;
+import com.sumit.utils.Roles;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,7 +36,7 @@ public class CustomUserDetailsServiceTestsWithNoSpringContext {
     void loadUserByUsername(){ 
         // mock the response for dependent userRepository call
         when(userRepository.findByUsername(ArgumentMatchers.anyString()))
-                .thenReturn(new User("MockUsername", "MockPassword", List.of("USER")));
+                .thenReturn(new User("MockUsername", "MockPassword", List.of(Roles.USER.toString())));
 
         UserDetails userDetails = customUserDetailsService.loadUserByUsername("sumitmittal");
         Assertions.assertNotNull(userDetails);

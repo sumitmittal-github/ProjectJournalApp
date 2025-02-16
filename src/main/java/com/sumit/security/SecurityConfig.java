@@ -1,6 +1,7 @@
 package com.sumit.security;
 
 import com.sumit.service.UserService;
+import com.sumit.utils.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -53,8 +54,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/public/**", "/weather/**").permitAll())
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/admin/**").hasRole("ADMIN"))
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/user/**", "/journal/**").hasRole("USER"))
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/admin/**").hasRole(Roles.ADMIN.toString()))
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/user/**", "/journal/**").hasRole(Roles.USER.toString()))
                 .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .build();
