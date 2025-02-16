@@ -5,6 +5,7 @@ import com.sumit.service.CustomCacheService;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -13,6 +14,7 @@ import java.util.Map;
 
 @Component
 @Log4j2
+@DependsOn("loadDummyDataInDB")  // Ensure FirstBean is initialized before this
 public class MyCache {
 
     public Map<String, String> cacheMap;

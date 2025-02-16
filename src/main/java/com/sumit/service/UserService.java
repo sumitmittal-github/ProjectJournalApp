@@ -1,6 +1,7 @@
 package com.sumit.service;
 
 import com.sumit.entity.User;
+import com.sumit.repository.UserRepoWithCriteria;
 import com.sumit.repository.UserRepository;
 import com.sumit.utils.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,15 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserRepoWithCriteria userRepoWithCriteria;
+
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(12);
 
     public User register(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setRoles(List.of(Roles.USER.toString()));
+        if(user.getRoles().isEmpty())
+            user.setRoles(List.of(Roles.USER.toString()));
         user.setCreatedOn(LocalDateTime.now());
         return userRepository.save(user);
     }
@@ -56,6 +61,10 @@ public class UserService {
 
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+    public List<User> findSAUsers() {
+        return userRepoWithCriteria.getUsersForSentimentAnalysis();
     }
 
     /*

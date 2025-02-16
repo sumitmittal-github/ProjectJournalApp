@@ -26,6 +26,10 @@ public class User {
     @NonNull
     private String password;
 
+    private String email;
+
+    private boolean sentimentAnalysisOpted;
+
     @NonNull
     private List<String> roles = new ArrayList<>();
 
@@ -36,9 +40,11 @@ public class User {
 
     private LocalDateTime updatedOn;
 
-    public User(@NonNull String username, @NonNull String password, @NonNull List<String> roles) {
+    public User(@NonNull String username, @NonNull String password, String email, boolean sentimentAnalysisOpted, @NonNull List<String> roles) {
         this.username = username;
         this.password = password;
+        this.email = email;
+        this.sentimentAnalysisOpted = sentimentAnalysisOpted;
         this.roles = roles;
     }
 

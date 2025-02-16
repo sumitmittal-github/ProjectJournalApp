@@ -29,6 +29,17 @@ public class AdminController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @GetMapping("/usersSA")
+    public ResponseEntity<List<User>> findSAUsers() {
+        log.info("Entry AdminController.findSAUsers ...");
+        List<User> list = userService.findSAUsers();
+        log.info("Exit AdminController.findSAUsers !!!");
+        if(list != null && !list.isEmpty())
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
     @PostMapping("/create")
     public ResponseEntity<User> createAdmin(@RequestBody User user) {
         try{

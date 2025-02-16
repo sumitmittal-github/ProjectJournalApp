@@ -26,4 +26,9 @@ public class JournalEntry {
 
     private LocalDateTime updatedOn;
 
+    public JournalEntry(@NonNull String title, String content){
+        this.title = title;
+        this.content = content;
+    }
+
 }

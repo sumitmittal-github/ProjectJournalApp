@@ -17,4 +17,8 @@ public class CustomCacheService {
         return customCacheRepository.findAll();
     }
 
+    public void create(String key, String value){
+        customCacheRepository.save(new CustomCache(key, value));
+    }
+
 }
