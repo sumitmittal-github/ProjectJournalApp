@@ -31,5 +31,18 @@ public class UserRepoWithCriteria {
         return users;
     }
 
+    public List<User> findAllUsersForPromotionEmail(){
+        log.info("Entry findAllUsersForPromotionEmail ...");
+
+        Query query = new Query();
+        query.addCriteria(Criteria.where("email").regex("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$"));
+        query.addCriteria(Criteria.where("roles").in("USER"));
+        List<User> users = mongoTemplate.find(query, User.class);
+        log.info(STR."Users : \{users}");
+
+        log.info("Exit findAllUsersForPromotionEmail !!!");
+        return users;
+    }
+
 
 }

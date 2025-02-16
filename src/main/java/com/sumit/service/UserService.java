@@ -67,6 +67,10 @@ public class UserService {
         return userRepoWithCriteria.getUsersForSentimentAnalysis();
     }
 
+    public List<User> findAllUsersForPromotionEmail() {
+        return userRepoWithCriteria.findAllUsersForPromotionEmail();
+    }
+
     /*
     public User registerAdmin(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
