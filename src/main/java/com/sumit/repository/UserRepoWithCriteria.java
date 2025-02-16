@@ -21,7 +21,7 @@ public class UserRepoWithCriteria {
         log.info("Entry getUsersForSentimentAnalysis ...");
 
         Query query = new Query();
-        query.addCriteria(Criteria.where("email").regex("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"));
+        query.addCriteria(Criteria.where("email").regex("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$"));
         query.addCriteria(Criteria.where("sentimentAnalysisOpted").is(true));
         query.addCriteria(Criteria.where("roles").in("USER", "ADMIN"));
         List<User> users = mongoTemplate.find(query, User.class);

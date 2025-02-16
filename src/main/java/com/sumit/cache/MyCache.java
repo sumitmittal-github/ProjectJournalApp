@@ -14,7 +14,7 @@ import java.util.Map;
 
 @Component
 @Log4j2
-@DependsOn("loadDummyDataInDB")  // Ensure FirstBean is initialized before this
+@DependsOn("loadDummyDataInDB")  // To ensure that LoadDummyDataInDB will be initialized before this MyCache bean
 public class MyCache {
 
     public Map<String, String> cacheMap;
