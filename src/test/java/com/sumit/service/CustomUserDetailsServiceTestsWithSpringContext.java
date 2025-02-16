@@ -31,7 +31,7 @@ public class CustomUserDetailsServiceTestsWithSpringContext {
     public void loadUserByUsername(){
         // mock the response for dependent userRepository call
         when(userRepository.findByUsername(ArgumentMatchers.anyString()))
-                .thenReturn(new User("mockUsername", "mockPassword", List.of("USER")));
+                .thenReturn(new User("mockUsername", "mockPassword", "mock@mock.com", true, List.of("USER")));
 
         UserDetails userDetails = customUserDetailsService.loadUserByUsername("mockUsername");
         Assertions.assertNotNull(userDetails);
