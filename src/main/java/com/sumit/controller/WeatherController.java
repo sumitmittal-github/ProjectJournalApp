@@ -15,11 +15,11 @@ public class WeatherController {
 
     @GetMapping
     public String getCurrentWeather(@RequestParam("city") String cityName){
-        ResponseEntity<Weather> response = weatherService.getCurrentWeather(cityName);
-        if(response == null || response.getBody() == null || response.getBody().getCurrent() == null)
+        Weather response = weatherService.getCurrentWeather(cityName);
+        if(response == null || response.getCurrent() == null)
             return "Please try again with some other City name !!";
 
-        int feelsLike = response.getBody().getCurrent().getFeelslike();
+        int feelsLike = response.getCurrent().getFeelslike();
         return STR."Today's weather is \{feelsLike}";
     }
 
