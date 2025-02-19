@@ -86,7 +86,6 @@ bin\windows\kafka-console-producer.bat --topic my-topic --bootstrap-server local
 		key1-value1
 		key2-value2
 
-
 5. Consumer
 bin\windows\kafka-console-consumer.bat --topic my-topic --bootstrap-server localhost:9092 --property "key.separator=-" --property "print.key=true" --group console-consumer-group-01 --from-beginning 
 
