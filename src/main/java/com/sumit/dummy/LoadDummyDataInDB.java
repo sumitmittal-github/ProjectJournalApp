@@ -24,10 +24,10 @@ public class LoadDummyDataInDB {
     @Autowired
     CustomCacheService customCacheService;
 
-    /*@PostConstruct
+    @PostConstruct
     public void insertDummyDataInDB(){
         log.info("Creating Dummy Data ...");
-
+        /*
         userService.register(new User("sumit.mittal","pwd123", "sumit@gmail.com", true, List.of(Roles.USER.toString())));
         userService.register(new User("lokesh.mittal","pwd456", "lokesh@gmail.com", false, List.of(Roles.ADMIN.toString(), Roles.USER.toString())));
         userService.register(new User("suman.mittal","pwd789", "suman@gmail.com", true, List.of(Roles.ADMIN.toString())));
@@ -39,8 +39,9 @@ public class LoadDummyDataInDB {
         journalEntryService.createByUser("lokesh.mittal", new JournalEntry("Target", "Canada Citizenship"));
 
         customCacheService.create("GET_WEATHER_API_URL", "http://api.weatherstack.com/current?access_key=%s&query=%s");
+        */
         log.info("Created Dummy Data !!!");
-    }*/
+    }
 
 
 }
