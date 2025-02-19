@@ -1,8 +1,8 @@
 # Project Journal App
-In our Project Journal App demo project we have integrated Redis and Kafka for below use cases - 
+In my Project Journal App demo project, I have integrated Redis and Kafka for below use cases - 
 
 **Redis -**<br/>
-We are caching the 3rd party Weather API data for 4 hrs. So every time we do not need to call the API to get the weather information 
+I am caching the 3rd party Weather API data for 4 hrs. So every time we do not need to call the Weather API to get the weather information.
 
 **Apache Kafka -**<br/>
 Every weekend morning 9AM we send the sentiments email by Spring Scheduler So if the JMS (Java Mail Sender) API is down we will lose those users because we will not be able to send the mails. So the spring scheduler will push all thoses users detail into the kafka topic, and kafka consumer will pick those users information from the kafka topic and will send the emails.
@@ -49,10 +49,10 @@ This is to generate the cron expression to run a Cron job in SpringBoot <br/>
 
 **Apache Kafka**<br/>
 ```
-1. start zookeeper  				:star_of_david: default port : 2181
+1. start zookeeper                        default port : 2181
 bin\windows\zookeeper-server-start.bat config\zookeeper.properties
 
-2. start broker(kafka server)      	:star_of_david: default port : 9092
+2. start broker(kafka server)             default port : 9092
 bin\windows\kafka-server-start.bat config\server.properties
 
 3. Topic 
@@ -61,10 +61,14 @@ bin\windows\kafka-topics.bat --create --topic my-topic --bootstrap-server localh
 bin\windows\kafka-topics.bat --describe --topic my-topic --bootstrap-server localhost:9092
 
 4. Producer 
-bin\windows\kafka-console-producer.bat --topic my-topic --bootstrap-server localhost:9092
+bin\windows\kafka-console-producer.bat --topic my-topic --bootstrap-server localhost:9092 --property "key.separator=-" --property "parse.key=true"
+	Note: The format for sending messages should be -
+		key1-value1
+		key2-value2
+
 
 5. Consumer
-bin\windows\kafka-console-consumer.bat --topic my-topic --from-beginning --bootstrap-server localhost:9092
+bin\windows\kafka-console-consumer.bat --topic my-topic --bootstrap-server localhost:9092 --property "key.separator=-" --property "print.key=true" --group console-consumer-group-01 --from-beginning 
 
 6. Consumer group - 
 bin\windows\kafka-consumer-groups.bat --list --bootstrap-server localhost:9092
