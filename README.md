@@ -4,6 +4,13 @@ In my Project Journal App demo project, I have integrated Redis and Kafka for be
 **Redis -**<br/>
 I am caching the 3rd party Weather API data for 4 hrs. So every time we do not need to call the Weather API to get the weather information.
 
+```
+To execute the Redis caching code in WeatherController.java, hit below get request from postman -
+GET : localhost:8080/weather?city=montreal
+```
+<br/>
+
+
 **Apache Kafka -**<br/>
 Every weekend morning 9AM we send the sentiments email by Spring Scheduler So if the JMS (Java Mail Sender) API is down we will lose those users because we will not be able to send the mails. 
 Therefore the spring scheduler will push all thoses users detail into the kafka topic, and kafka consumer will pick those users information from the kafka topic and will send the emails.
