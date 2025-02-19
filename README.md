@@ -5,7 +5,20 @@ In my Project Journal App demo project, I have integrated Redis and Kafka for be
 I am caching the 3rd party Weather API data for 4 hrs. So every time we do not need to call the Weather API to get the weather information.
 
 **Apache Kafka -**<br/>
-Every weekend morning 9AM we send the sentiments email by Spring Scheduler So if the JMS (Java Mail Sender) API is down we will lose those users because we will not be able to send the mails. So the spring scheduler will push all thoses users detail into the kafka topic, and kafka consumer will pick those users information from the kafka topic and will send the emails.
+Every weekend morning 9AM we send the sentiments email by Spring Scheduler So if the JMS (Java Mail Sender) API is down we will lose those users because we will not be able to send the mails. 
+Therefore the spring scheduler will push all thoses users detail into the kafka topic, and kafka consumer will pick those users information from the kafka topic and will send the emails.
+
+```
+MyScheduler.java
+- This class has a scheduler which will run every 2 minutes(for testing, we can change the cron expression) to fetch few uses.
+- We will calculate the setiments of these users
+- We will push all these users and their sentiments to Kafka Topic.
+
+KafkaConsumer.java
+- Once we will push messages in kafka topic this class has a listener so here we will get all those messages.
+- We will calculate the users email Id, email subject and email body
+- We will send email to the user with its sentiment. (for sending email we have autowired JavaMailSender)
+```
 
 ---
 
