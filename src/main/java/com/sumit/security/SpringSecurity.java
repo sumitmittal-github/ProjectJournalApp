@@ -1,6 +1,6 @@
 package com.sumit.security;
 
-import com.sumit.utils.Roles;
+import com.sumit.enums.Roles;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;

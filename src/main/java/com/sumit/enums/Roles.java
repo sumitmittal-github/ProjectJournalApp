@@ -1,4 +1,4 @@
-package com.sumit.utils;
+package com.sumit.enums;
 
 public enum Roles {
 

@@ -1,17 +1,12 @@
 package com.sumit.dummy;
 
-import com.sumit.entity.JournalEntry;
-import com.sumit.entity.User;
 import com.sumit.service.CustomCacheService;
 import com.sumit.service.JournalEntryService;
 import com.sumit.service.UserService;
-import com.sumit.utils.Roles;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 @Log4j2

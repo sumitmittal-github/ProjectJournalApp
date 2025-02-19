@@ -3,7 +3,7 @@ package com.sumit.service;
 import com.sumit.entity.User;
 import com.sumit.repository.UserRepoWithCriteria;
 import com.sumit.repository.UserRepository;
-import com.sumit.utils.Roles;
+import com.sumit.enums.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -67,8 +67,8 @@ public class UserService {
         return userRepoWithCriteria.getUsersForSentimentAnalysis();
     }
 
-    public List<User> findAllUsersForPromotionEmail() {
-        return userRepoWithCriteria.findAllUsersForPromotionEmail();
+    public List<User> findAllUsersForSentimentsEmail() {
+        return userRepoWithCriteria.findAllUsersForSentimentsEmail();
     }
 
     /*

@@ -3,7 +3,7 @@ package com.sumit.service;
 import com.sumit.entity.User;
 import com.sumit.repository.UserRepository;
 import com.sumit.security.CustomUserDetailsService;
-import com.sumit.utils.Roles;
+import com.sumit.enums.Roles;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

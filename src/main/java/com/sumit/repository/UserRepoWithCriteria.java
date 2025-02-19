@@ -31,8 +31,8 @@ public class UserRepoWithCriteria {
         return users;
     }
 
-    public List<User> findAllUsersForPromotionEmail(){
-        log.info("Entry findAllUsersForPromotionEmail ...");
+    public List<User> findAllUsersForSentimentsEmail(){
+        log.info("Entry findAllUsersForSentimentsEmail ...");
 
         Query query = new Query();
         query.addCriteria(Criteria.where("email").regex("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$"));
@@ -40,7 +40,7 @@ public class UserRepoWithCriteria {
         List<User> users = mongoTemplate.find(query, User.class);
         log.info(STR."Users : \{users}");
 
-        log.info("Exit findAllUsersForPromotionEmail !!!");
+        log.info("Exit findAllUsersForSentimentsEmail !!!");
         return users;
     }
 
