@@ -1,5 +1,4 @@
-package com.sumit.model;
-
+package com.sumit.kafka;
 
 import com.sumit.enums.Sentiment;
 import lombok.AllArgsConstructor;
