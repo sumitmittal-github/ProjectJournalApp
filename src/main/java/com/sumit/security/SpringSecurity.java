@@ -1,6 +1,6 @@
 package com.sumit.security;
 
-import com.sumit.enums.Roles;
+import com.sumit.constant.Roles;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -19,19 +19,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 public class SpringSecurity {
 
-    // =========================== Authentication ===========================
-    @Bean
-    public AuthenticationProvider authenticationProvider(){
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userDetailsService());
-        authenticationProvider.setPasswordEncoder(passwordEncoder());
-
-        /*authenticationProvider.setUserDetailsService(new CustomUserDetailsService());
-        authenticationProvider.setPasswordEncoder(new BCryptPasswordEncoder(12));*/
-
-        return authenticationProvider;
-    }
-
 
     @Bean
     public UserDetailsService userDetailsService(){
@@ -44,6 +31,15 @@ public class SpringSecurity {
     }
 
 
+
+    // =========================== Authentication ===========================
+    @Bean
+    public AuthenticationProvider authenticationProvider(){
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService());
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+        return authenticationProvider;
+    }
 
 
 
@@ -58,7 +54,6 @@ public class SpringSecurity {
                 .httpBasic(Customizer.withDefaults())
                 .build();
     }
-
 
 
 

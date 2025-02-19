@@ -1,4 +1,4 @@
-package com.sumit.enums;
+package com.sumit.constant;
 
 public enum Sentiment {
 

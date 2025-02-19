@@ -3,7 +3,7 @@ package com.sumit.service;
 import com.sumit.entity.User;
 import com.sumit.repository.UserRepoWithCriteria;
 import com.sumit.repository.UserRepository;
-import com.sumit.enums.Roles;
+import com.sumit.constant.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

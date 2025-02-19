@@ -1,6 +1,6 @@
 package com.sumit.kafka;
 
-import com.sumit.enums.Sentiment;
+import com.sumit.constant.Sentiment;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

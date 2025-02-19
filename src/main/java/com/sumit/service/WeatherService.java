@@ -2,8 +2,8 @@ package com.sumit.service;
 
 import com.sumit.cache.MyCache;
 import com.sumit.entity.Weather;
-import com.sumit.utils.Constants;
-import com.sumit.utils.PlaceHolders;
+import com.sumit.constant.AppConstants;
+import com.sumit.utils.RedisUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,24 +26,24 @@ public class WeatherService {
     String weatherApiToken;
 
     @Autowired
-    RedisService redisService;
+    RedisUtils redisUtils;
 
     public Weather getCurrentWeather(String cityName){
         try{
             // try to get the weather data from redis cache and if found return the cached response
-            Weather cachedWeather = redisService.getFromCache(cityName, Weather.class);
+            Weather cachedWeather = redisUtils.getFromCache(cityName, Weather.class);
             if(cachedWeather != null)
                 return cachedWeather;
 
             // if not found in redis cache, then get from weather API and also set in redis cache
-            String weatherAPIUrl = myCache.cacheMap.get(PlaceHolders.CACHE_GET_WEATHER_API_KEY);
+            String weatherAPIUrl = myCache.cacheMap.get(AppConstants.CACHE_GET_WEATHER_API_KEY);
             String currentWeatherApi = String.format(weatherAPIUrl, weatherApiToken, cityName);
             log.info("API CALL : {}", currentWeatherApi);
             ResponseEntity<Weather> weather = restTemplate.exchange(currentWeatherApi, HttpMethod.GET, null, Weather.class);
             Weather weatherResponse = weather.getBody();
             log.info(weatherResponse);
 
-            redisService.setInCache(cityName, weatherResponse, Constants.CACHE_TIME_TO_LIVE_MINUTES);
+            redisUtils.setInCache(cityName, weatherResponse, AppConstants.CACHE_TIME_TO_LIVE_MINUTES);
             return weatherResponse;
         } catch (Exception e){
             log.error(STR."Exception in getCurrentWeather for city name = \{cityName}", e);
