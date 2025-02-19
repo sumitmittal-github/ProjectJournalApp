@@ -87,7 +87,7 @@ bin\windows\kafka-console-producer.bat --topic my-topic --bootstrap-server local
 		key2-value2
 
 5. Consumer
-bin\windows\kafka-console-consumer.bat --topic my-topic --bootstrap-server localhost:9092 --property "key.separator=-" --property "print.key=true" --group console-consumer-group-01 --from-beginning 
+bin\windows\kafka-console-consumer.bat --topic my-topic --bootstrap-server localhost:9092 --property "key.separator=-" --property "print.key=true" --group my-consumer-group --partition 0 --from-beginning 
 
 6. Consumer group - 
 bin\windows\kafka-consumer-groups.bat --list --bootstrap-server localhost:9092
