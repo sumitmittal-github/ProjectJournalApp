@@ -11,12 +11,12 @@ public class KafkaUtils {
     @Autowired
     KafkaTemplate<String, SentimentData> kafkaTemplate;
 
-    public void sendMessage(String topic, String key, SentimentData data){
+    public void send(String topic, String key, SentimentData data){
         kafkaTemplate.send(topic, key, data);
     }
 
     // we can also send data in specific partition by calling overloaded send() method of kafka template
-    public void sendMessage(String topic, Integer partition, String key, SentimentData data){
+    public void send(String topic, Integer partition, String key, SentimentData data){
         kafkaTemplate.send(topic, partition, key, data);
     }
 

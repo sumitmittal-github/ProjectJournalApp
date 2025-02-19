@@ -60,7 +60,7 @@ public class MyScheduler {
 
                                 try{
                                     // send sentiments data in a kafka message
-                                    kafkaUtils.sendMessage(AppConstants.KAFKA_TOPIC_NAME, key, sentimentData);
+                                    kafkaUtils.send(AppConstants.KAFKA_TOPIC_NAME, key, sentimentData);
                                 } catch(Exception e){
                                     log.info("kafka was down, so handle this scenario we are directly sending the email");
                                     String email = sentimentData.getEmail();

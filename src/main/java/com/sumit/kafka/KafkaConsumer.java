@@ -24,7 +24,7 @@ public class KafkaConsumer {
         log.info(STR."We have received the sentiments data from partition who is having data of key = \{record.key()} ");
 
         // send email to the user
-        String email = record.value().getEmail();
+        String email = "samikshamittal1993@gmail.com";
         String subject = "Weekend Sentiments";
         String body = STR."Hello \{record.value().getUsername()}, Your previous weeks sentiment was : \{record.value().getSentiment().name()}";
         jmsUtils.sendMail(email, subject, body);
