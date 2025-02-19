@@ -3,6 +3,7 @@ package com.sumit.scheduler;
 import com.sumit.entity.User;
 import com.sumit.enums.Sentiment;
 import com.sumit.kafka.SentimentData;
+import com.sumit.service.EmailService;
 import com.sumit.service.UserService;
 import com.sumit.utils.Constants;
 import lombok.extern.log4j.Log4j2;
@@ -23,6 +24,9 @@ public class MyScheduler {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    EmailService emailService;
 
     @Autowired
     KafkaTemplate<String, SentimentData> kafkaTemplate;
@@ -55,10 +59,18 @@ public class MyScheduler {
                                 };
                                 SentimentData sentimentData = new SentimentData(user.getUsername(), user.getEmail(), sentiment);
 
-                                // send sentiments data in a kafka message
-                                kafkaTemplate.send(Constants.KAFKA_TOPIC_NAME, key, sentimentData);   // topic name, message key, message value
-                                // we can also send data in specific partition by calling overloaded send() method
-                                //kafkaTemplate.send(Constants.KAFKA_TOPIC_NAME, 0, key, sentimentData);   // topic name, partition, message key, message value
+                                try{
+                                    // send sentiments data in a kafka message
+                                    kafkaTemplate.send(Constants.KAFKA_TOPIC_NAME, key, sentimentData);   // topic name, message key, message value
+                                    // we can also send data in specific partition by calling overloaded send() method
+                                    //kafkaTemplate.send(Constants.KAFKA_TOPIC_NAME, 0, key, sentimentData);   // topic name, partition, message key, message value
+                                } catch(Exception e){
+                                    log.info("kafka was down, so handle this scenario we are directly sending the email");
+                                    String email = sentimentData.getEmail();
+                                    String subject = "Weekend Sentiments";
+                                    String body = STR."Hello \{sentimentData.getUsername()}, Your previous weeks sentiment was : \{sentimentData.getSentiment().name()}";
+                                    emailService.sendMail(email, subject, body);
+                                }
                             }
                     );
         } catch(Exception e){
