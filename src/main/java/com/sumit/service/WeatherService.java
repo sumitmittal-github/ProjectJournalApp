@@ -30,12 +30,12 @@ public class WeatherService {
 
     public Weather getCurrentWeather(String cityName){
         try{
-            // try to get the weather data from cache and if found return the cached response
+            // try to get the weather data from redis cache and if found return the cached response
             Weather cachedWeather = redisService.getFromCache(cityName, Weather.class);
             if(cachedWeather != null)
                 return cachedWeather;
 
-            // if not found in cache, then get from weather API and also set in cache
+            // if not found in redis cache, then get from weather API and also set in redis cache
             String weatherAPIUrl = myCache.cacheMap.get(PlaceHolders.CACHE_GET_WEATHER_API_KEY);
             String currentWeatherApi = String.format(weatherAPIUrl, weatherApiToken, cityName);
             log.info("API CALL : {}", currentWeatherApi);
