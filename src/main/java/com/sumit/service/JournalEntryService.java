@@ -27,15 +27,7 @@ public class JournalEntryService {
         return user.getJournalEntries();
     }
 
-    public JournalEntry findById(String username, ObjectId entryId) {
-        User user = userService.findByUsername(username);
-        List<JournalEntry> journalEntries = user.getJournalEntries().stream().filter(je -> je.getId().equals(entryId)).toList();
-        if(journalEntries.isEmpty())
-            return null;
-        return journalEntries.getFirst();
-    }
-
-    //@Transactional
+    //@Transactional   : COMMENTED THIS BECAUSE WE ARE USING MONGODB ON LOCAL AND IT DOES NOT SUPPORT TRANSACTIONS
     public JournalEntry createByUser(String username, JournalEntry journalEntry){
         User user = userService.findByUsername(username);
         if(user == null)
@@ -73,7 +65,15 @@ public class JournalEntryService {
         return dbEntry;
     }
 
-    @Transactional
+    public JournalEntry findById(String username, ObjectId entryId) {
+        User user = userService.findByUsername(username);
+        List<JournalEntry> journalEntries = user.getJournalEntries().stream().filter(je -> je.getId().equals(entryId)).toList();
+        if(journalEntries.isEmpty())
+            return null;
+        return journalEntries.getFirst();
+    }
+
+    //@Transactional   : COMMENTED THIS BECAUSE WE ARE USING MONGODB ON LOCAL AND IT DOES NOT SUPPORT TRANSACTIONS
     public boolean deleteByUser(String username, ObjectId entryId){
         User user = userService.findByUsername(username);
         if(user == null)

@@ -8,7 +8,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -36,6 +35,24 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public User updateUser(String username, User uiUser) {
+        //dbUser can not be null, because this was secure end point and only authenticated user can access this end point
+        User dbUser = userRepository.findByUsername(username);
+
+        // Can't update username and password. For username or password change it should have a different API because if we will change them now then the JWT token will be invalid
+        //dbUser.setUsername(uiUser.getUsername());
+        //dbUser.setPassword(bCryptPasswordEncoder.encode(uiUser.getPassword()));   // because from front end we will always get the plain password
+        dbUser.setEmail(uiUser.getEmail());
+        dbUser.setUpdatedOn(LocalDateTime.now());
+        userRepository.save(dbUser);
+        return dbUser;
+    }
+
+    public boolean deleteUser(String username){
+        userRepository.deleteByUsername(username);
+        return true;
+    }
+
     public User registerDummy(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setCreatedOn(LocalDateTime.now());
@@ -47,20 +64,6 @@ public class UserService {
         user.setRoles(List.of(Roles.ADMIN.toString(), Roles.USER.toString()));
         user.setCreatedOn(LocalDateTime.now());
         return userRepository.save(user);
-    }
-
-    public User update(String username, User uiUser) {
-        User dbUser = userRepository.findByUsername(username);                      //dbUser can not be null, because this was secure end point and only authenticated user can access this end point
-        dbUser.setUsername(uiUser.getUsername());
-        dbUser.setPassword(bCryptPasswordEncoder.encode(uiUser.getPassword()));     // because from front end we will always get the plain password
-        dbUser.setUpdatedOn(LocalDateTime.now());
-        userRepository.save(dbUser);
-        return dbUser;
-    }
-
-    public boolean delete(String username){
-        userRepository.deleteByUsername(username);
-        return true;
     }
 
     public User findByUsername(String username) {

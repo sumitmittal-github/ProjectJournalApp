@@ -46,7 +46,7 @@ public class AuthenticationController {
             return new ResponseEntity<>(jwtToken, HttpStatus.OK);
         } catch(Exception e){
             log.error("Exception occurred while login ", e);
-            return new ResponseEntity<>("Incorrect username & password", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Incorrect username or password", HttpStatus.BAD_REQUEST);
         }
     }
 
