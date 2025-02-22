@@ -28,18 +28,18 @@ public class LoadDummyDataInDB {
     public void insertDummyDataInDB(){
         log.info("Creating Dummy Data ...");
         /*
-        userService.register(new User("sumit.mittal","pwd123", "sumit@gmail.com", true, List.of(Roles.USER.toString())));
-        userService.register(new User("lokesh.mittal","pwd456", "lokesh@gmail.com", false, List.of(Roles.ADMIN.toString(), Roles.USER.toString())));
-        userService.register(new User("suman.mittal","pwd789", "suman@gmail.com", true, List.of(Roles.ADMIN.toString())));
-        userService.register(new User("dummy.user","dummy123", "dummy@dummy", true, List.of(Roles.USER.toString())));
+        userService.registerDummy(new User("sumit.mittal","pwd123", "sumit@gmail.com", true, List.of(Roles.USER.toString())));
+        userService.registerDummy(new User("lokesh.mittal","pwd456", "lokesh@gmail.com", false, List.of(Roles.ADMIN.toString(), Roles.USER.toString())));
+        userService.registerDummy(new User("suman.mittal","pwd789", "suman@gmail.com", true, List.of(Roles.ADMIN.toString())));
+        userService.registerDummy(new User("dummy.user","dummy123", "dummy@dummy", true, List.of(Roles.USER.toString())));
 
         journalEntryService.createByUser("sumit.mittal", new JournalEntry("Morning", "This is a wonderful morning"));
         journalEntryService.createByUser("sumit.mittal", new JournalEntry("Study", "Complete the DSA and System Design"));
         journalEntryService.createByUser("sumit.mittal", new JournalEntry("Kids", "Janvi & Aarvi"));
         journalEntryService.createByUser("lokesh.mittal", new JournalEntry("Target", "Canada Citizenship"));
-
-        customCacheService.create("GET_WEATHER_API_URL", "http://api.weatherstack.com/current?access_key=%s&query=%s");
         */
+        customCacheService.create("GET_WEATHER_API_URL", "http://api.weatherstack.com/current?access_key=%s&query=%s");
+
         log.info("Created Dummy Data !!!");
     }
 

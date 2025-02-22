@@ -4,6 +4,7 @@ import com.sumit.entity.User;
 import com.sumit.repository.UserRepoWithCriteria;
 import com.sumit.repository.UserRepository;
 import com.sumit.constant.Roles;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@Log4j2
 public class UserService {
 
     @Autowired
@@ -22,10 +24,20 @@ public class UserService {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(12);
 
-    public User register(User user) {
+    public User registerUser(User user) {
+        User userFromDB = userRepository.findByUsername(user.getUsername());
+        if(userFromDB != null){
+            log.warn(STR."User \{user.getUsername()} tried to register again, hence returned back.");
+            return null;
+        }
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        if(user.getRoles().isEmpty())
-            user.setRoles(List.of(Roles.USER.toString()));
+        user.setRoles(List.of(Roles.USER.toString()));
+        user.setCreatedOn(LocalDateTime.now());
+        return userRepository.save(user);
+    }
+
+    public User registerDummy(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setCreatedOn(LocalDateTime.now());
         return userRepository.save(user);
     }
@@ -71,31 +83,13 @@ public class UserService {
         return userRepoWithCriteria.findAllUsersForSentimentsEmail();
     }
 
-    /*
-    public User registerAdmin(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.getRoles().add(Roles.ADMIN.toString());
-        user.setCreatedOn(LocalDateTime.now());
-        return userRepository.save(user);
-    }
-
+    /*  When we use Basic Auth in SpringBoot, not the JWT.
     public User loginUser(User user) {
         User dbUser = userRepository.findByUsernameAndPassword(user.getUsername(), bCryptPasswordEncoder.encode(user.getPassword()));
         if(dbUser == null)
             return null;
-
         return dbUser;
     }
-
-
-
-    public User findById(ObjectId id) {
-        return userRepository.findById(id).orElse(null);
-    }
-
-
-
-
     */
 
 

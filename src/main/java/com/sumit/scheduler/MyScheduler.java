@@ -30,7 +30,7 @@ public class MyScheduler {
     @Autowired
     KafkaUtils kafkaUtils;
 
-    @Scheduled(cron = "0 0/1 * 1/1 * ?")
+    //@Scheduled(cron = "0 0/1 * 1/1 * ?")
     public void sendSentimentsEmailEverySundayMorning(){
         try{
             log.info("******************************************************************************");

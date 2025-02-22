@@ -35,7 +35,7 @@ public class JournalEntryService {
         return journalEntries.getFirst();
     }
 
-    @Transactional
+    //@Transactional
     public JournalEntry createByUser(String username, JournalEntry journalEntry){
         User user = userService.findByUsername(username);
         if(user == null)

@@ -30,7 +30,6 @@ public class User {
 
     private boolean sentimentAnalysisOpted;
 
-    @NonNull
     private List<String> roles = new ArrayList<>();
 
     @DBRef
@@ -40,7 +39,7 @@ public class User {
 
     private LocalDateTime updatedOn;
 
-    public User(@NonNull String username, @NonNull String password, String email, boolean sentimentAnalysisOpted, @NonNull List<String> roles) {
+    public User(@NonNull String username, @NonNull String password, String email, boolean sentimentAnalysisOpted, List<String> roles) {
         this.username = username;
         this.password = password;
         this.email = email;
