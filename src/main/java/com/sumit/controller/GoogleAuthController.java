@@ -1,7 +1,7 @@
 package com.sumit.controller;
 
 /*
-    Here we can create different controller for different 3rd party logins -
+    Here we can create different callback controller for login with different 3rd party applications -
     ex - Login with Google      - GoogleAuthController.java
          Login with Facebook    - FacebookAuthController.java
          Login with Github      - GithubAuthController.java
@@ -33,7 +33,8 @@ import java.util.UUID;
 @Log4j2
 public class GoogleAuthController {
 
-    // NOTE : This end point will be hit by FE with the authorizationCode FE received from google's authorization API.
+    // NOTE : This end point will be hit by the Google Auth API with the authorizationCode
+    //        because FE sent this controller endpoint as the redirectURI when it hit the Google Auth API
 
     private static final String CLIENT_ID = "CLIENT_ID_WE_GOT_FROM_GOOGLE_WHEN_WE_CREATED_APP_INSIDE_GOOGLE";
     private static final String CLIENT_SECRET = "CLIENT_SECRET_WE_GOT_FROM_GOOGLE_WHEN_WE_CREATED_APP_INSIDE_GOOGLE";
@@ -107,7 +108,7 @@ public class GoogleAuthController {
                 return new ResponseEntity<>(jwtToken, HttpStatus.OK);
 
         } catch(Exception e){
-            log.error("Exception occurred in 3rd party login with Google : ", e);
+            log.error("Exception occurred when tried to login with 3rd party API as Google : ", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
