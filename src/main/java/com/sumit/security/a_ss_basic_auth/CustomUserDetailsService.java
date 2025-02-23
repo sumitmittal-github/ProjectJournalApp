@@ -1,4 +1,4 @@
-package com.sumit.security;
+package com.sumit.security.a_ss_basic_auth;
 
 import com.sumit.entity.User;
 import com.sumit.repository.UserRepository;

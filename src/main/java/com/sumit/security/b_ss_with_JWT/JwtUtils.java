@@ -1,4 +1,4 @@
-package com.sumit.security;
+package com.sumit.security.b_ss_with_JWT;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

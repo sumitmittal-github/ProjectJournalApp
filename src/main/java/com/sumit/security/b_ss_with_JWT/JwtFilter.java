@@ -1,5 +1,6 @@
-package com.sumit.security;
+package com.sumit.security.b_ss_with_JWT;
 
+import com.sumit.security.a_ss_basic_auth.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,11 +1,13 @@
-package com.sumit.security;
+package com.sumit.security.a_ss_basic_auth;
 
 import com.sumit.constant.Roles;
+import com.sumit.security.b_ss_with_JWT.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -58,6 +60,7 @@ public class SpringSecurity {
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/admin/**").hasRole(Roles.ADMIN.toString()))
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/user/**", "/api/v1/journal/**").hasRole(Roles.USER.toString()))
                 .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
+                //.httpBasic(Customizer.withDefaults())           : for SS with basic auth
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

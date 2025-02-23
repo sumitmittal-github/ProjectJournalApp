@@ -1,7 +1,7 @@
 package com.sumit.controller;
 
 import com.sumit.entity.User;
-import com.sumit.security.JwtUtils;
+import com.sumit.security.b_ss_with_JWT.JwtUtils;
 import com.sumit.service.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;

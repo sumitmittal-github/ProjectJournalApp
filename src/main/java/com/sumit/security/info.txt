@@ -1,0 +1,18 @@
+1. Package a_ss_basic_auth :
+   -----------------------
+    This package contains the classes we require for Spring Security Basic Auth.
+    a). SpringSecurity.java           - to authenticate and authorize the user
+    b). CustomUserDetailsService.java - to loadUserByUsername from DB and validate the user
+
+2. Package b_ss_with_JWT :
+   ---------------------
+    This package contains the additional classes we require for Spring Security with JWT.
+    a). SpringSecurity.java           - to authenticate and authorize the user
+    b). CustomUserDetailsService.java - to loadUserByUsername from DB and validate the user
+    c). JwtFilter.java  - to validate the token and set the user in SecurityContext
+    d). JwtUtils.java   - common method of JWT
+                            a). generate JWT token by username
+                            b). get username from JWT token
+                            c). validate token expiry n so on.....
+    e). public /login endpoint        - authenticationManager.authenticate(UN, PWD) : for user authentication
+                                        generate JWT token by username and return this token to FE
